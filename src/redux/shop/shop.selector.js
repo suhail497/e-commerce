@@ -15,6 +15,7 @@ const COLLECTION_ID_MAP = {
     mens: 5
 }
 
+// currying
 const selectCollection = collectionUrlParam => createSelector(
     [selectShopData],
     shop => shop.find(collection =>
