@@ -11,7 +11,7 @@ import { persistReducer } from "redux-persist" //session storage
 // You can also find the sessionStorage from redux persist library
 import storage from 'redux-persist/lib/storage'
 import directoryReducer from './directory/directory.reducer';
-import { shopReducer } from './shop/shop.reducer';
+import shopReducer from './shop/shop.reducer';
 
 
 const persistConfig = {
