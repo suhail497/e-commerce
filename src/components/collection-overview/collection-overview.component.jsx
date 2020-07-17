@@ -4,13 +4,14 @@ import CollectionPreview from '../../components/collection-preview/collection-pr
 import { connect } from 'react-redux'
 import { createStructuredSelector } from "reselect"
 import { selectCollectionsForPreview } from '../../redux/shop/shop.selector';
+import { CollectionOverViewContainer } from './collection-overview.styles';
 
 
 
 const CollectionOverview = ({ collections }) => {
     console.log(collections)
     return (
-        <div className='collection-overview'>
+        <CollectionOverViewContainer>
             {
                 collections.map(({ id, ...otherProps }) =>
                     (
@@ -19,7 +20,7 @@ const CollectionOverview = ({ collections }) => {
 
                 )}
 
-        </div>
+        </CollectionOverViewContainer>
 
     );
 }

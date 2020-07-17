@@ -25,10 +25,6 @@ const StripeButton = ({ price }) => {
             stripeKey={pusblishbalKey}
 
         />
-
-
-
-
     );
 }
 

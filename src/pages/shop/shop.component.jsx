@@ -7,27 +7,52 @@ import React from 'react'
 import { Route } from "react-router-dom"
 import CollectionOverview from "../../components/collection-overview/collection-overview.component"
 import Collection from '../collection/collection';
+import { connect } from "react-redux"
+import { updataCollections } from '../../redux/shop/shop.actions';
+import { firestore, convertCollectionSnapshotToMap } from '../../firebase/firebase.utils';
+// import collection from '../collection/collection';
 
-const ShopComponent = ({ match }) => {
-    console.log(match)
-    return (
-        <div className='shop-page'>
-            <Route exact path={`${match.path}`} component={CollectionOverview} />
-            <Route exact path={`${match.path}/:collectionId`} component={Collection} />
 
-        </div>
 
-    );
+
+class ShopComponent extends React.Component {
+
+    unSubscribeFromSnapShot = null
+
+    componentDidMount() {
+        const { collections } = this.props
+        const collectionRef = firestore.collection('collections')
+
+        // console.log(collectionRef)
+
+        this.unSubscribeFromSnapShot = collectionRef.onSnapshot(async snapshot => {
+            const collectionMap = convertCollectionSnapshotToMap(snapshot)
+            collections(collectionMap)
+        })
+    }
+
+    render() {
+        const { match } = this.props
+        return (
+
+            <div className='shop-page'>
+                <Route exact path={`${match.path}`} component={CollectionOverview} />
+                <Route exact path={`${match.path}/:collectionId`} component={Collection} />
+
+            </div>
+
+        )
+    }
 }
 
 
-// const mapStatetoProps = createStructuredSelector(
-//     {
-//         collections: selectShopData
-//     }
-// )
+const mapDispatchToProps = dispatch => (
+    {
+        collections: collectionMap => dispatch(updataCollections(collectionMap))
+    }
+)
 
-export default ShopComponent
+export default connect(null, mapDispatchToProps)(ShopComponent)
 
 
 

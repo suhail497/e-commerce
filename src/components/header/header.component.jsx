@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { auth } from '../../firebase/firebase.utils'
 import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/crwns.svg'
@@ -13,30 +13,33 @@ import Cartdropdown from './../cart-dropdown/cart-dropdown.component';
 // React library special syntax:
 
 // https://facebook.github.io/create-react-app/docs/adding-images-fonts-and-files
-import './header.styles.scss'
+// import './header.styles.scss'
+
 import { createStructuredSelector } from "reselect"
 import { selectCartHidden } from '../../redux/cart/cart.selector';
 import { selectCurentUser } from '../../redux/user/user.selector';
+import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './header.styles';
+
 
 
 
 
 const Header = ({ currentUser, hidden }) => (
-    <div className='header'>
-        <Link className='logo-container' to='/'>
-            <Logo className='logo' />
-        </Link>
-        <div className='options'>
+    <HeaderContainer>
+        <LogoContainer to='/'>
+            <Logo />
+        </LogoContainer>
+        <OptionsContainer>
 
-            <Link className='option' to='/shop'>SHOP</Link>
-            <Link className='option' to='/shop'>CONTACT</Link>
+            <OptionLink to='/shop'>SHOP</OptionLink>
+            <OptionLink to='/shop'>CONTACT</OptionLink>
             {
                 currentUser ?
-                    <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div> :
-                    <Link className='option' to='/sign-in-and-signup'>SIGN IN</Link>
+                    <OptionLink as='div' onClick={() => auth.signOut()}>SIGN OUT</OptionLink> :
+                    <OptionLink to='/sign-in-and-signup'>SIGN IN</OptionLink>
             }
             <CartIcon />
-        </div>
+        </OptionsContainer>
         {
             hidden ?
                 null : <Cartdropdown />
@@ -44,7 +47,7 @@ const Header = ({ currentUser, hidden }) => (
         }
 
 
-    </div>
+    </HeaderContainer>
 )
 
 // const mapStateToProps=(state)=>(
